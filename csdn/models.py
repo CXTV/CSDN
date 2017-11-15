@@ -62,7 +62,7 @@ class User(models.Model):
     '''
     用户表
     '''
-    username = models.CharField(max_length=32, verbose_name='用户名')
+    username = models.CharField(verbose_name='用户名')
     password = models.CharField(max_length=64, verbose_name='密码')
 
 
@@ -70,12 +70,12 @@ class UserInfo(models.Model):
     '''
     用户详情
     '''
-    nickname = models.CharField(max_length=32, verbose_name='昵称')
-    age = models.CharField(max_length=32, verbose_name='年龄')
-    sex = models.CharField(max_length=32, verbose_name='性别')
+    nickname = models.CharField(verbose_name='昵称')
+    age = models.CharField(verbose_name='年龄')
+    sex = models.CharField(verbose_name='性别')
     email = models.CharField(max_length=64, verbose_name='邮箱地址')
-    job = models.CharField(max_length=32, verbose_name='工作')
-    education = models.CharField(max_length=32, verbose_name='教育')
+    job = models.CharField(verbose_name='工作')
+    education = models.CharField(verbose_name='教育')
     time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
     photo = models.ImageField(verbose_name='头像')
 
@@ -91,5 +91,5 @@ class Blog(models.Model):
     '''
     站点
     '''
-    blogname = models.CharField(max_length=32, verbose_name='站点名')
-    url = models.CharField(max_length=32, verbose_name='站点路径')
+    blogname = models.CharField(verbose_name='站点名')
+    url = models.CharField(verbose_name='站点路径')

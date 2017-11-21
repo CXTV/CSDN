@@ -1,6 +1,7 @@
 import json
 from django.shortcuts import render, redirect, HttpResponse
 from blog.geetest import GeetestLib
+from csdn import forms
 
 pc_geetest_id = "b46d1900d0a894591916ea94ea91bd2c"
 pc_geetest_key = "36fc3fe98530eea08dfc6ce76e3d24c4"
@@ -28,13 +29,11 @@ def login(request):
         import json
         return HttpResponse(json.dumps(flag))
 
+
 def regist(request):
-    if request.method =='GET':
-        return
-
-
-
-
+    if request.method == 'GET':
+        form_obj = forms.RegForm()  # 实例化
+        return render(request, 'regist.html', {'form_obj': form_obj})
 
 
 def pcgetcaptcha(request):
@@ -45,6 +44,7 @@ def pcgetcaptcha(request):
     request.session["user_id"] = user_id
     response_str = gt.get_response_str()
     return HttpResponse(response_str)
+
 
 def mobilegetcaptcha(request):
     user_id = 'test'
@@ -72,6 +72,7 @@ def pcvalidate(request):
         return HttpResponse(result)
     return HttpResponse("error")
 
+
 def pcajax_validate(request):
     if request.method == "POST":
         gt = GeetestLib(pc_geetest_id, pc_geetest_key)
@@ -84,7 +85,7 @@ def pcajax_validate(request):
             result = gt.success_validate(challenge, validate, seccode, user_id)
         else:
             result = gt.failback_validate(challenge, validate, seccode)
-        result = {"status":"success"} if result else {"status":"fail"}
+        result = {"status": "success"} if result else {"status": "fail"}
         return HttpResponse(json.dumps(result))
     return HttpResponse("error")
 

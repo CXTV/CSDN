@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+
 class UserInfo(AbstractUser):  # settings:   AUTH_USER_MODEL = "blog.UserInfo"
     """
     用户信息

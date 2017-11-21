@@ -40,7 +40,7 @@
                       <div class="form-group">
                         <label for="email">邮箱</label>
                           {{ form_obj.email }}
-                      </div>
+                      </div>3
 
                       <div class="form-group avatar">
                         <label for="avatar">头像</label>
@@ -77,7 +77,7 @@
         formdata.append("password",$("#id_password").val());
         formdata.append("repeat_pwd",$("#id_repeat_pwd").val());
         formdata.append("email",$("#id_email").val());
-        formdata.append("avatar_img",$("#avatar_file")[0].files[0]);
+        formdata.append("avatar_img",$("#avatar_file")[0].files[0]); #拿到最近传的头像
 
         $.ajax({
             url:"/reg/",

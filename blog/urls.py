@@ -17,6 +17,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from csdn import views
 
+from django.views.static import serve
+from blog import settings  # 引入配置media的路径
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,6 +27,6 @@ urlpatterns = [
     url(r'^regist/', views.regist),
     url(r'^pc-geetest/register', views.pcgetcaptcha, name='pcgetcaptcha'),
     url(r'^pc-geetest/validate$', views.pcvalidate, name='pcvalidate'),
-    url(r'^pc-geetest/ajax_validate',views.pcajax_validate, name='pcajax_validate'),
+    url(r'^pc-geetest/ajax_validate', views.pcajax_validate, name='pcajax_validate'),
 
 ]

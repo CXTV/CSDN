@@ -29,7 +29,8 @@ def login(request):
         return HttpResponse(json.dumps(flag))
 
 def regist(request):
-    return HttpResponse('ok')
+    if request.method =='GET':
+        return
 
 
 

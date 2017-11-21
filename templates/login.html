@@ -5,26 +5,39 @@
     <title>login</title>
     <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <script src="/static/bootstrap-3.3.7-dist/js/jquery-3.1.1.js"></script>
-        <!-- 引入封装了failback的接口--initGeetest -->
+    <!-- 引入封装了failback的接口--initGeetest -->
     <script src="http://static.geetest.com/static/tools/gt.js"></script>
     <style>
-        html{height: 100%}
-        body{margin: 0;height: 100%;
-            background: #fff;}
-        canvas{display: block;width: 100%;height: 100%;}
-{#        .body_content{#}
-{#            position: absolute;#}
-{#            top:30%;#}
-{#            left: 20%;#}
-{#            height: 20%;#}
-{#            background: palevioletred;#}
-{#            width: 20%;#}
-{#        }#}
-        .container{
-            margin-top:-650px;
+        html {
+            height: 100%
         }
-        .button_type{
-            margin-top:20px;
+
+        body {
+            margin: 0;
+            height: 100%;
+            background: #fff;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        {#        .body_content{#}
+        {#            position: absolute;#}
+        {#            top:30%;#}
+        {#            left: 20%;#}
+        {#            height: 20%;#}
+        {#            background: palevioletred;#}
+        {#            width: 20%;#}
+        {#        }#}
+        .container {
+            margin-top: -650px;
+        }
+
+        .button_type {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -33,44 +46,42 @@
 <script src="/static/canvas-nest-master/src/index.js"></script>
 <div class="container">
     <div class="col-md-8 col-md-offset-3" style="color: black; margin-top: 100px">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-3">
-                    <h3>代码改变世界</h3>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-3">
+                <h3>代码改变世界</h3>
+            </div>
+        </div>
+        <form class="form-horizontal" style="margin-top: 50px">
+            {% csrf_token %}
+            <div class="form-group form-group-lg">
+                <label for="username" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="username1" name="username" placeholder="用户名">
+                </div>
+
+            </div>
+            <div class="form-group form-group-lg">
+                <label for="password" class="col-sm-2 control-label">密码</label>
+                <span class="error_info"></span>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" id="password1" name="password" placeholder="密码">
+
                 </div>
             </div>
-            <form class="form-horizontal" style="margin-top: 50px">
-                {% csrf_token %}
-                <div class="form-group form-group-lg">
-                    <label for="username" class="col-sm-2 control-label">用户名</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" id="username1" name="username" placeholder="用户名">
-                    </div>
 
-                </div>
-                <div class="form-group form-group-lg">
-                    <label for="password" class="col-sm-2 control-label">密码</label>
-                    <span class="error_info"></span>
-                    <div class="col-sm-5">
-                        <input type="password" class="form-control" id="password1" name="password" placeholder="密码">
+            <div class="col-md-offset-2 col-md-6 button_type">
+                <button type="button" class="btn btn-lg btn-success" id="popup-submit">登陆</button>
+                {#                    <input class="btn" id="popup-submit" type="submit" value="提交">#}
 
-                    </div>
-                </div>
-
-                <div class="col-md-offset-2 col-md-6 button_type">
-                    <button type="button" class="btn btn-lg btn-success" id="popup-submit">登陆</button>
-{#                    <input class="btn" id="popup-submit" type="submit" value="提交">#}
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/regist/">
-                        <button type="button" class="btn btn-lg btn-primary">注册</button>
-                    </a>
-                    <div id="popup-captcha"></div>
-                </div>
-            </form>
-</div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/regist/">
+                    <button type="button" class="btn btn-lg btn-primary">注册</button>
+                </a>
+                <div id="popup-captcha"></div>
+            </div>
+        </form>
     </div>
-
-
+</div>
 
 
 <script type="application/javascript" src="/static/jquery-3.2.1.min.js"></script>
@@ -81,13 +92,14 @@
     function foo() {
         $(".error_info").html("")
     }
+
     var handlerPopup = function (captchaObj) {
         // 成功的回调
         captchaObj.onSuccess(function () {
             var validate = captchaObj.getValidate();
             $.ajax({
-{#                url: "/pc-geetest/ajax_validate", // 进行二次验证#}
-                url:"/login/",
+                {#                url: "/pc-geetest/ajax_validate", // 进行二次验证#}
+                url: "/login/",
                 type: "post",
                 headers: {"X-CSRFToken": $.cookie('csrftoken')},
                 dataType: "json",
@@ -96,7 +108,7 @@
                     password: $('#password1').val(),
                     geetest_challenge: validate.geetest_challenge,
                     geetest_validate: validate.geetest_validate,
-                    geetest_seccode: validate.geetest_seccode
+                    geetest_seccode: validate.geetest_seccode,
                 },
                 success: function (data) {
                     if (data) {

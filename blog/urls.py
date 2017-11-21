@@ -29,4 +29,7 @@ urlpatterns = [
     url(r'^pc-geetest/validate$', views.pcvalidate, name='pcvalidate'),
     url(r'^pc-geetest/ajax_validate', views.pcajax_validate, name='pcajax_validate'),
 
+    # media 配置
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+
 ]

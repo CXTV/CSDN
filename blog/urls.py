@@ -17,9 +17,13 @@ from django.conf.urls import url
 from django.contrib import admin
 from csdn import views
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/', views.login),
-    # url(r'^index/', views.index),
-    # url(r'^regist/', views.regist),
+    url(r'^index/', views.index),
+    url(r'^pc-geetest/register', views.pcgetcaptcha, name='pcgetcaptcha'),
+    url(r'^pc-geetest/validate$', views.pcvalidate, name='pcvalidate'),
+    url(r'^pc-geetest/ajax_validate',views.pcajax_validate, name='pcajax_validate'),
+
 ]

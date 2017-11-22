@@ -121,7 +121,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "blog", "media", "uploads")
-MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "blog", "media", "uploads")  #路径
+MEDIA_URL = "/media/"   #别名
 
 AUTH_USER_MODEL = "csdn.UserInfo"

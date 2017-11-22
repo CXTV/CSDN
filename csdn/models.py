@@ -11,7 +11,7 @@ class UserInfo(AbstractUser):  # settings:   AUTH_USER_MODEL = "blog.UserInfo"
     nid = models.BigAutoField(primary_key=True)
     nickname = models.CharField(verbose_name='昵称', max_length=32)
     telephone = models.CharField(max_length=11, blank=True, null=True, unique=True, verbose_name='手机号码')
-    avatar = models.FileField(verbose_name='头像', upload_to='avatar', default="/avatar/default.png")
+    avatar = models.FileField(verbose_name='头像', upload_to='avatar', default="/avatar/default.png")  #直接存放在media配置好的文件夹下
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
     def __str__(self):

@@ -17,8 +17,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from csdn import views
 
-from django.views.static import serve
-from blog import settings  # 引入配置media的路径
+from django.views.static import serve  # 引入配置media的路径
+from blog import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^pc-geetest/validate$', views.pcvalidate, name='pcvalidate'),
     url(r'^pc-geetest/ajax_validate', views.pcajax_validate, name='pcajax_validate'),
 
-    # media 配置
+    # media 配置,专门放用户上传的文件
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 
 ]

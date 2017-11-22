@@ -44,8 +44,8 @@ def regist(request):
             username=form_obj.cleaned_data["username"]
             password=form_obj.cleaned_data["password"]
             email=form_obj.cleaned_data.get("email")
-            avatar_img=request.FILES.get("avatar_img")  #文件取发
-
+            avatar_img=request.FILES.get("avatar_img")  #文件取法
+            #写入数据，用原生user要写成creat_user
             user_obj=models.UserInfo.objects.create_user(username=username,password=password,email=email,avatar=avatar_img,nickname=username)
             print(user_obj.avatar,"......")
             regResponse["user"]=user_obj.username

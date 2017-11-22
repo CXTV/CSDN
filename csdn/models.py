@@ -4,7 +4,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-
 class UserInfo(AbstractUser):  # settings:   AUTH_USER_MODEL = "blog.UserInfo"
     """
     用户信息
@@ -17,6 +16,9 @@ class UserInfo(AbstractUser):  # settings:   AUTH_USER_MODEL = "blog.UserInfo"
 
     def __str__(self):
         return self.username
+
+    class Meta:
+        verbose_name_plural = '用户信息'
 
 
 class Blog(models.Model):
@@ -33,6 +35,9 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name_plural = '站点信息'
+
 
 class Category(models.Model):
     """
@@ -47,11 +52,14 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = 'category'
-        verbose_name_plural = 'category'
+        verbose_name_plural = '个人文章分类'
         ordering = ['title']
 
 
 class Article(models.Model):
+    '''
+    文章表
+    '''
     nid = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=50, verbose_name='文章标题')
     desc = models.CharField(max_length=255, verbose_name='文章描述')
@@ -59,6 +67,7 @@ class Article(models.Model):
     comment_count = models.IntegerField(default=0)
     up_count = models.IntegerField(default=0)
     down_count = models.IntegerField(default=0)
+    alter_time = models.DateTimeField(verbose_name='修改时间', auto_now=True)
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
     category = models.ForeignKey(verbose_name='文章类型', to='Category', to_field='nid', null=True)
@@ -82,6 +91,9 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name_plural = '文章表'
+
 
 class ArticleDetail(models.Model):
     """
@@ -91,6 +103,9 @@ class ArticleDetail(models.Model):
     content = models.TextField(verbose_name='文章内容', )
 
     article = models.OneToOneField(verbose_name='所属文章', to='Article', to_field='nid')
+
+    class Meta:
+        verbose_name_plural = '文章详细'
 
 
 class Comment(models.Model):
@@ -111,30 +126,42 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 
+    class Meta:
+        verbose_name_plural = '评论表'
+
 
 class CommentUp(models.Model):
     """
-    点赞表
+    评论点赞表
     """
 
     nid = models.AutoField(primary_key=True)
     user = models.ForeignKey('UserInfo', null=True)
     comment = models.ForeignKey("Comment", null=True)
 
+    class Meta:
+        verbose_name_plural = '评论点赞表'
+
 
 class ArticleUp(models.Model):
     """
-    点赞表
+    文章点赞表
     """
     nid = models.AutoField(primary_key=True)
     user = models.ForeignKey('UserInfo', null=True)
     article = models.ForeignKey("Article", null=True)
+
+    class Meta:
+        verbose_name_plural = '文章点赞'
 
 
 class Tag(models.Model):
     nid = models.AutoField(primary_key=True)
     title = models.CharField(verbose_name='标签名称', max_length=32)
     blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='nid')
+
+    class Meta:
+        verbose_name_plural = '标签'
 
 
 class Article2Tag(models.Model):
@@ -146,3 +173,4 @@ class Article2Tag(models.Model):
         unique_together = [
             ('article', 'tag'),
         ]
+        verbose_name_plural = '文章标签关系表'

@@ -1,7 +1,10 @@
 import json
 from django.shortcuts import render, redirect, HttpResponse
+from csdn.forms import  *
 from blog.geetest import GeetestLib
 from csdn import forms
+from django.contrib import auth
+
 
 pc_geetest_id = "b46d1900d0a894591916ea94ea91bd2c"
 pc_geetest_key = "36fc3fe98530eea08dfc6ce76e3d24c4"
@@ -31,9 +34,26 @@ def login(request):
 
 
 def regist(request):
-    if request.method == 'GET':
-        form_obj = forms.RegForm()  # 实例化
-        return render(request, 'regist.html', {'form_obj': form_obj})
+
+    if request.is_ajax():  #如果是ajax请求
+        form_obj=forms.RegForm(request,request.POST)  #获取数据
+
+        regResponse={"user":None,"errorsList":None}
+        if form_obj.is_valid():    #如果符合条件，取数据
+
+            username=form_obj.cleaned_data["username"]
+            password=form_obj.cleaned_data["password"]
+            email=form_obj.cleaned_data.get("email")
+            avatar_img=request.FILES.get("avatar_img")  #文件取发
+
+            user_obj=models.UserInfo.objects.create_user(username=username,password=password,email=email,avatar=avatar_img,nickname=username)
+            print(user_obj.avatar,"......")
+            regResponse["user"]=user_obj.username
+
+        else:
+            regResponse["errorsList"]=form_obj.errors
+        import json
+        return HttpResponse(json.dumps(regResponse))
 
 
 def pcgetcaptcha(request):

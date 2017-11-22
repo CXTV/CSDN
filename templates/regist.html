@@ -74,22 +74,22 @@
 
     $("#subBtn").click(function () {
 
-        var formdata=new FormData();
+        var formdata=new FormData();    //传值
         formdata.append("username",$("#id_username").val());
         formdata.append("password",$("#id_password").val());
         formdata.append("repeat_pwd",$("#id_repeat_pwd").val());
         formdata.append("email",$("#id_email").val());
-        formdata.append("avatar_img",$("#avatar_file")[0].files[0]);    #拿到最近传的头像
+        formdata.append("avatar_img",$("#avatar_file")[0].files[0]);    //拿到最近传的头像
 
         $.ajax({
             url:"/reg/",
             type:'POST',
             data:formdata,
-            contentType:false,
+            contentType:false,     // 要设置false才可以发,为什么
             processData:false,
             headers:{"X-CSRFToken":$.cookie('csrftoken')},
             success:function (data) {
-                  console.log(data);
+                  console.log(data);   //前端控制台输出数据
                 var data=JSON.parse(data);
 
                 if (data.user){

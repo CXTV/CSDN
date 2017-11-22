@@ -59,13 +59,13 @@
 <img src="/media/up" alt="">
 
 <script>
-    // 头像预览
+    // 头像预览,迷
 
     $("#avatar_file").change(function () {
 
         var ele_file=$(this)[0].files[0];  //this.files
         var reader=new FileReader();
-        reader.readAsDataURL(ele_file);
+        reader.readAsDataURL(ele_file);   //读取当前文件数据的url
         reader.onload=function () {
             $("#avatar_img")[0].src=this.result
         }
@@ -99,10 +99,10 @@
 
                     console.log(data.errorsList);
 
-                   $.each(data.errorsList,function (i,j) {
+                   $.each(data.errorsList,function (i,j) {   //循环取出错误信息
                        console.log(i,j);
 
-                       $span=$("<span>");
+                       $span=$("<span>");  //将错误写入每个输入框下
                        $span.addClass("pull-right").css("color","red");
                        $span.html(j[0]);
                        $("#id_"+i).after($span).parent().addClass("has-error")

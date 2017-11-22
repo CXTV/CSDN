@@ -8,7 +8,7 @@ from csdn import models
 '''
 class RegForm(forms.Form):
     username = forms.CharField(max_length=12, min_length=5, required=True, error_messages={
-        "required": "不能为空",
+        "required": "不能为空",  #错误提示改为中文
     }, widget=widgets.TextInput(attrs={"class": "form-control", "placeholder": "username"})) #widget用法,设置样式
 
     password = forms.CharField(min_length=6, widget=widgets.PasswordInput(

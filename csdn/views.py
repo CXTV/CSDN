@@ -4,7 +4,7 @@ from csdn.forms import  *
 from blog.geetest import GeetestLib
 from csdn import forms
 from django.contrib import auth
-
+from csdn.demo import demo
 
 pc_geetest_id = "b46d1900d0a894591916ea94ea91bd2c"
 pc_geetest_key = "36fc3fe98530eea08dfc6ce76e3d24c4"
@@ -15,22 +15,27 @@ mobile_geetest_key = "f5883f4ee3bd4fa8caec67941de1b903"
 # Create your views here.
 
 
+# def login(request):
+#     if request.method == 'GET':
+#         return render(request, 'login.html')
+#     username = request.POST.get('username')
+#     password = request.POST.get('password')
+#     print(username)
+#     print(password)
+#     flag = False
+#     if username == 'rocks' and password == '123':
+#         flag = True
+#         # return redirect('/index/')
+#         import json
+#         return HttpResponse(json.dumps(flag))
+#     else:
+#         import json
+#         return HttpResponse(json.dumps(flag))
+
 def login(request):
-    if request.method == 'GET':
-        return render(request, 'login.html')
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    print(username)
-    print(password)
-    flag = False
-    if username == 'rocks' and password == '123':
-        flag = True
-        # return redirect('/index/')
-        import json
-        return HttpResponse(json.dumps(flag))
-    else:
-        import json
-        return HttpResponse(json.dumps(flag))
+
+    a = demo(request)
+    return a
 
 
 def regist(request):

@@ -22,36 +22,36 @@
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
             <form>
-                      {% csrf_token %}
-                      <div class="form-group">
-                        <label for="username">用户名</label>
-                        {{ form_obj.username }}
-                      </div>
-                      <div class="form-group">
-                        <label for="password">密码</label>
-                        {{ form_obj.password }}
-                      </div>
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="username">用户名</label>
+                    {{ form_obj.username }}
+                  </div>
+                  <div class="form-group">
+                    <label for="password">密码</label>
+                    {{ form_obj.password }}
+                  </div>
 
-                       <div class="form-group">
-                        <label for="password">确认密码</label>
-                           {{ form_obj.repeat_pwd }}
-                      </div>
+                   <div class="form-group">
+                    <label for="password">确认密码</label>
+                       {{ form_obj.repeat_pwd }}
+                  </div>
 
-                      <div class="form-group">
-                        <label for="email">邮箱</label>
-                          {{ form_obj.email }}
-                      </div>3
+                  <div class="form-group">
+                    <label for="email">邮箱</label>
+                      {{ form_obj.email }}
+                  </div>3
 
-                      <div class="form-group avatar">
-                        <label for="avatar">头像</label>
-                        <img src="/static/img/default.png" alt="" id="avatar_img">
-                        <input type="file" class="form-control" id="avatar_file" >
-                      </div>
+                  <div class="form-group avatar">
+                    <label for="avatar">头像</label>
+                    <img src="/static/img/default.png" alt="" id="avatar_img">
+                    <input type="file" class="form-control" id="avatar_file" >
+                  </div>
 
 
-                    <input type="button" value="submit" class="btn btn-primary" id="subBtn"><span class="error"></span>
+                <input type="button" value="submit" class="btn btn-primary" id="subBtn"><span class="error"></span>
 
-                </form>
+            </form>
         </div>
     </div>
 </div>
@@ -103,18 +103,16 @@
                        console.log(i,j);
 
                        $span=$("<span>");  //将错误写入每个输入框下
-                       $span.addClass("pull-right").css("color","red");
-                       $span.html(j[0]);
+                       $span.addClass("pull-right").css("color","red");  //向右移动
+                       $span.html(j[0]);  //找到错误信息
                        $("#id_"+i).after($span).parent().addClass("has-error")
 
-                       if (i=="__all__"){
+                       if (i=="__all__"){   // 全局钩子
                             $("#id_repeat_pwd").after($span)
                        }
                    })
 
-
                 }
-
 
             }
         })

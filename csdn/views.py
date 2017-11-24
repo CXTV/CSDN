@@ -1,10 +1,9 @@
 import json
 from django.shortcuts import render, redirect, HttpResponse
-from csdn.forms import  *
+from csdn.forms import *
 from blog.geetest import GeetestLib
 from csdn import forms
 from django.contrib import auth
-from csdn.demo import demo
 
 pc_geetest_id = "b46d1900d0a894591916ea94ea91bd2c"
 pc_geetest_key = "36fc3fe98530eea08dfc6ce76e3d24c4"
@@ -15,48 +14,41 @@ mobile_geetest_key = "f5883f4ee3bd4fa8caec67941de1b903"
 # Create your views here.
 
 
-# def login(request):
-#     if request.method == 'GET':
-#         return render(request, 'login.html')
-#     username = request.POST.get('username')
-#     password = request.POST.get('password')
-#     print(username)
-#     print(password)
-#     flag = False
-#     if username == 'rocks' and password == '123':
-#         flag = True
-#         # return redirect('/index/')
-#         import json
-#         return HttpResponse(json.dumps(flag))
-#     else:
-#         import json
-#         return HttpResponse(json.dumps(flag))
-
 def login(request):
-
-    a = demo(request)
-    return a
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    flag = False
+    user = auth.authenticate(username = username, password =password)  #判断用户名密码是否匹配
+    if user:
+        flag = True
+        auth.login(request,user)   #将用户名密码传入session
+        # return redirect('/index/')
+        return HttpResponse(json.dumps(flag))
+    else:
+        return HttpResponse(json.dumps(flag))
 
 
 def regist(request):
+    if request.is_ajax():  # 如果是ajax请求
+        form_obj = forms.RegForm(request, request.POST)  # 获取数据
 
-    if request.is_ajax():  #如果是ajax请求
-        form_obj=forms.RegForm(request,request.POST)  #获取数据
+        regResponse = {"user": None, "errorsList": None}
+        if form_obj.is_valid():  # 如果符合条件，取数据
 
-        regResponse={"user":None,"errorsList":None}
-        if form_obj.is_valid():    #如果符合条件，取数据
-
-            username=form_obj.cleaned_data["username"]
-            password=form_obj.cleaned_data["password"]
-            email=form_obj.cleaned_data.get("email")
-            avatar_img=request.FILES.get("avatar_img")  #文件取法
-            #写入数据，用原生user要写成creat_user
-            user_obj=models.UserInfo.objects.create_user(username=username,password=password,email=email,avatar=avatar_img,nickname=username)
-            print(user_obj.avatar,"......")
-            regResponse["user"]=user_obj.username
+            username = form_obj.cleaned_data["username"]
+            password = form_obj.cleaned_data["password"]
+            email = form_obj.cleaned_data.get("email")
+            avatar_img = request.FILES.get("avatar_img")  # 文件取法
+            # 写入数据，用原生user要写成creat_user
+            user_obj = models.UserInfo.objects.create_user(username=username, password=password, email=email,
+                                                           avatar=avatar_img, nickname=username)
+            print(user_obj.avatar, "......")
+            regResponse["user"] = user_obj.username
 
         else:
-            regResponse["errorsList"]=form_obj.errors
+            regResponse["errorsList"] = form_obj.errors
         import json
         return HttpResponse(json.dumps(regResponse))
 

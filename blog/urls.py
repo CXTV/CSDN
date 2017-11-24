@@ -18,7 +18,7 @@ from django.contrib import admin
 from csdn import views
 
 from django.views.static import serve  # 引入配置media的路径
-from blog import settings
+from django.conf import settings      # 引入settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

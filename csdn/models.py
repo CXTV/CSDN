@@ -11,7 +11,8 @@ class UserInfo(AbstractUser):  # settings:   AUTH_USER_MODEL = "blog.UserInfo"
     nid = models.BigAutoField(primary_key=True)
     nickname = models.CharField(verbose_name='昵称', max_length=32)
     telephone = models.CharField(max_length=11, blank=True, null=True, unique=True, verbose_name='手机号码')
-    avatar = models.FileField(verbose_name='头像', upload_to='avatar', default="/avatar/default.png")  #存放在media配置好的avatar文件夹下
+    avatar = models.FileField(verbose_name='头像', upload_to='avatar',
+                              default="/avatar/default.png")  # 存放在media配置好的avatar文件夹下
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
     def __str__(self):
@@ -53,7 +54,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = '个人文章分类'
-        ordering = ['title']
+        ordering = ['title']    #排序
 
 
 class Article(models.Model):
@@ -78,15 +79,7 @@ class Article(models.Model):
         through_fields=('article', 'tag'),
     )
 
-    type_choices = [
-        (1, "编程语言"),
-        (2, "软件设计"),
-        (3, "前端"),
-        (4, "操作系统"),
-        (5, "数据库"),
-    ]
-
-    article_type_id = models.IntegerField(choices=type_choices, default=None)
+    site_article_category = models.ForeignKey("SiteArticleCategory", null=True)
 
     def __str__(self):
         return self.title
@@ -160,6 +153,9 @@ class Tag(models.Model):
     title = models.CharField(verbose_name='标签名称', max_length=32)
     blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='nid')
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         verbose_name_plural = '标签'
 
@@ -169,8 +165,38 @@ class Article2Tag(models.Model):
     article = models.ForeignKey(verbose_name='文章', to="Article", to_field='nid')
     tag = models.ForeignKey(verbose_name='标签', to="Tag", to_field='nid')
 
+    def __str__(self):
+        return self.article.title + " + " + self.tag.title
+
     class Meta:
         unique_together = [
             ('article', 'tag'),
         ]
         verbose_name_plural = '文章标签关系表'
+
+
+class SiteCategory(models.Model):
+    """
+    大分类表
+    """
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = '大分类表'
+
+
+class SiteArticleCategory(models.Model):
+    """
+    小分类表
+    """
+    name = models.CharField(max_length=32)
+    site_category = models.ForeignKey("SiteCategory")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = '小分类表'

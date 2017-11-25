@@ -16,11 +16,11 @@ mobile_geetest_key = "f5883f4ee3bd4fa8caec67941de1b903"
 
 def login(request):
     if request.method == 'GET':
-        return render(request, 'login.html')
+        return render(request, 'login.html',)
     username = request.POST.get('username')
     password = request.POST.get('password')
     flag = False
-    user = auth.authenticate(username = username, password =password)  #判断用户名密码是否匹配
+    user = auth.authenticate(username = username, password = password)  #判断用户名密码是否匹配
     if user:
         flag = True
         auth.login(request,user)   #将用户名密码传入session
@@ -31,26 +31,29 @@ def login(request):
 
 
 def regist(request):
-    if request.is_ajax():  # 如果是ajax请求
-        form_obj = forms.RegForm(request, request.POST)  # 获取数据
 
-        regResponse = {"user": None, "errorsList": None}
-        if form_obj.is_valid():  # 如果符合条件，取数据
+    if request.is_ajax():
+        form_obj=forms.RegForm(request,request.POST)
 
-            username = form_obj.cleaned_data["username"]
-            password = form_obj.cleaned_data["password"]
-            email = form_obj.cleaned_data.get("email")
-            avatar_img = request.FILES.get("avatar_img")  # 文件取法
-            # 写入数据，用原生user要写成creat_user
-            user_obj = models.UserInfo.objects.create_user(username=username, password=password, email=email,
-                                                           avatar=avatar_img, nickname=username)
-            print(user_obj.avatar, "......")
-            regResponse["user"] = user_obj.username
+        regResponse={"user":None,"errorsList":None}
+        if form_obj.is_valid():
+
+            username=form_obj.cleaned_data["username"]
+            password=form_obj.cleaned_data["password"]
+            email=form_obj.cleaned_data.get("email")
+            avatar_img=request.FILES.get("avatar_img")
+
+            user_obj=models.UserInfo.objects.create_user(username=username,password=password,email=email,avatar=avatar_img,nickname=username)
+            print(user_obj.avatar,"......")
+            regResponse["user"]=user_obj.username
 
         else:
-            regResponse["errorsList"] = form_obj.errors
+            regResponse["errorsList"]=form_obj.errors
         import json
         return HttpResponse(json.dumps(regResponse))
+
+    form = forms.RegForm(request)
+    return render(request, 'regist.html', {'form_obj': form})
 
 
 def pcgetcaptcha(request):
@@ -110,3 +113,7 @@ def pcajax_validate(request):
 def index(request):
     if request.method == 'GET':
         return render(request, 'index.html')
+
+def logout(request):
+    auth.logout(request)           #清除session推出
+    return  redirect('/login')

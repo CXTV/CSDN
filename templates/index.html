@@ -8,6 +8,7 @@
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">
+{#    上菜单栏#}
     <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only"></span>
@@ -20,15 +21,51 @@
     <ul class="nav navbar-nav navbar-right" style="margin-right:25px;">
       {% if request.user.is_authenticated %}
             <li><a href=""><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{ request.user.username }}</a></li>
-            <li><a href="">注销</a></li>
+            <li><a href="/logout">注销</a></li>
          {% else %}
             <li><a href="/login/">登录</a></li>
-            <li><a href="">注册</a></li>
+            <li><a href="/regist/">注册</a></li>
         {% endif %}
-
 
     </ul>
 </nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+{#            左侧菜单#}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    网站分类
+                </div>
+                <div class="panel-footer">Panel footer</div>
+            </div>        </div>
+        <div class="col-md-7">
+{#            内容#}
 
+        </div>
+        <div class="col-md-3">
+{#            右侧面板#}
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">Panel footer</div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">Panel footer</div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">Panel footer</div>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

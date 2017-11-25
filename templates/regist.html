@@ -16,56 +16,52 @@
 </head>
 <body>
 
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
             <form>
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <label for="username">用户名</label>
-                    {{ form_obj.username }}
-                  </div>
-                  <div class="form-group">
-                    <label for="password">密码</label>
-                    {{ form_obj.password }}
-                  </div>
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <label for="username">用户名</label>
+                        {{ form_obj.username }}
+                      </div>
+                      <div class="form-group">
+                        <label for="password">密码</label>
+                        {{ form_obj.password }}
+                      </div>
 
-                   <div class="form-group">
-                    <label for="password">确认密码</label>
-                       {{ form_obj.repeat_pwd }}
-                  </div>
+                       <div class="form-group">
+                        <label for="password">确认密码</label>
+                           {{ form_obj.repeat_pwd }}
+                      </div>
 
-                  <div class="form-group">
-                    <label for="email">邮箱</label>
-                      {{ form_obj.email }}
-                  </div>3
+                      <div class="form-group">
+                        <label for="email">邮箱</label>
+                          {{ form_obj.email }}
+                      </div>
 
-                  <div class="form-group avatar">
-                    <label for="avatar">头像</label>
-                    <img src="/static/img/default.png" alt="" id="avatar_img">
-                    <input type="file" class="form-control" id="avatar_file" >
-                  </div>
+                      <div class="form-group avatar">
+                        <label for="avatar">头像</label>
+                        <img src="/static/img/default.png" alt="" id="avatar_img">
+                        <input type="file" class="form-control" id="avatar_file" >
+                      </div>
 
 
-                <input type="button" value="submit" class="btn btn-primary" id="subBtn"><span class="error"></span>
+                    <input type="button" value="submit" class="btn btn-primary" id="subBtn"><span class="error"></span>
 
-            </form>
+                </form>
         </div>
     </div>
 </div>
 
-<img src="/media/up" alt="">
-
 <script>
-    // 头像预览,迷
+    // 头像预览
 
     $("#avatar_file").change(function () {
 
         var ele_file=$(this)[0].files[0];  //this.files
         var reader=new FileReader();
-        reader.readAsDataURL(ele_file);   //读取当前文件数据的url
+        reader.readAsDataURL(ele_file);
         reader.onload=function () {
             $("#avatar_img")[0].src=this.result
         }
@@ -74,22 +70,23 @@
 
     $("#subBtn").click(function () {
 
-        var formdata=new FormData();    //传值
+        var formdata=new FormData();
         formdata.append("username",$("#id_username").val());
         formdata.append("password",$("#id_password").val());
         formdata.append("repeat_pwd",$("#id_repeat_pwd").val());
         formdata.append("email",$("#id_email").val());
-        formdata.append("avatar_img",$("#avatar_file")[0].files[0]);    //拿到最近传的头像
-
+        formdata.append("avatar_img",$("#avatar_file")[0].files[0]);
+        $(".pull-right").html("");
+        $(".pull-right").parent().removeClass("has-error")
         $.ajax({
-            url:"/reg/",
+            url:"/regist/",
             type:'POST',
             data:formdata,
-            contentType:false,     // 要设置false才可以发,为什么
+            contentType:false,
             processData:false,
             headers:{"X-CSRFToken":$.cookie('csrftoken')},
             success:function (data) {
-                  console.log(data);   //前端控制台输出数据
+                  console.log(data);
                 var data=JSON.parse(data);
 
                 if (data.user){
@@ -99,26 +96,29 @@
 
                     console.log(data.errorsList);
 
-                   $.each(data.errorsList,function (i,j) {   //循环取出错误信息
+                   $.each(data.errorsList,function (i,j) {
                        console.log(i,j);
 
-                       $span=$("<span>");  //将错误写入每个输入框下
-                       $span.addClass("pull-right").css("color","red");  //向右移动
-                       $span.html(j[0]);  //找到错误信息
+                       $span=$("<span>");
+
+                       $span.addClass("pull-right").css("color","red");
+                       $span.html(j[0]);
                        $("#id_"+i).after($span).parent().addClass("has-error")
 
-                       if (i=="__all__"){   // 全局钩子
+                    if (i=="__all__"){
                             $("#id_repeat_pwd").after($span)
                        }
+
                    })
 
+
                 }
+
 
             }
         })
     })
 </script>
-
 
 
 </body>

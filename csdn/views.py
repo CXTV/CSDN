@@ -111,8 +111,11 @@ def pcajax_validate(request):
 
 
 def index(request):
-    if request.method == 'GET':
-        return render(request, 'index.html')
+
+    artical_list = models.Article.objects.all()
+
+    return render(request,'index.html',{'artical_list':artical_list})
+
 
 def logout(request):
     auth.logout(request)           #清除session推出

@@ -41,6 +41,21 @@
             </div>        </div>
         <div class="col-md-7">
 {#            内容#}
+        {% for artical in artical_list %}
+            <div class="media">
+                <div class="media-left media-middle">
+                    <a href="#">
+                        <img class="media-object" src="/static/img/default.png" alt="">
+                    </a>
+                </div>
+{#            {% endfor %}#}
+                <div class="media-body">
+{#                    {% for artical in artical_list %}#}
+                        <h4 class="media-heading"><a href="">{{ artical.title }}</a></h4>
+                         {{ artical.desc }}
+                </div>
+            </div>
+        {% endfor %}
 
         </div>
         <div class="col-md-3">

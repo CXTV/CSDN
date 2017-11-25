@@ -13,12 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from csdn import views
 
 from django.views.static import serve  # 引入配置media的路径
-from django.conf import settings      # 引入settings
+from django.conf import settings  # 引入settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,7 +30,8 @@ urlpatterns = [
     url(r'^pc-geetest/validate$', views.pcvalidate, name='pcvalidate'),
     url(r'^pc-geetest/ajax_validate', views.pcajax_validate, name='pcajax_validate'),
 
+    # 个人站点首页
+    url(r'^blog/', include('csdn.urls')),
     # media 配置,专门放用户上传的文件
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-
 ]

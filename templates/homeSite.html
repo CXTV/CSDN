@@ -19,6 +19,9 @@
             font-size: 10px;
             color: gainsboro;
         }
+        .archive{
+            margin-top: 50px;
+        }
 
     </style>
 </head>
@@ -29,7 +32,15 @@
 </div>
 <div class="container">
     <div class="row">
+{#    左侧归档#}
         <div class="archive col-md-3" >
+            <div class="panel panel-info">
+                  <div class="panel-heading">个人信息</div>
+                  <div class="panel-body">
+                     <p><img src="{{ current_user.avatar.url }}" alt="" width="60" height="60"></p>
+                     <p>昵称: {{ current_user.username }}</p>
+                  </div>
+            </div>
 
         </div>
         <div class="artical_list col-md-8">

@@ -104,8 +104,3 @@
 
 </body>
 </html>
-<div class="panel-body">
-    {% for date in date_list %}
-        <p><a href="/blog/{{ current_user.username }}/date/{{ date.0 }}">{{ date.0 }}({{ date.1 }})</a></p>
-    {% endfor %}
-</div>

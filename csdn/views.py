@@ -121,9 +121,11 @@ def logout(request):
     return redirect('/login')
 
 
-def homeSite(request, username):    # 这里username传的是url里的
-    current_user=models.UserInfo.objects.filter(username=username).first()
+def homeSite(request, username):  # 这里username传的是url里的有名分组?P
+    # 查询当前用户
+    current_user = models.UserInfo.objects.filter(username=username).first()
     if not current_user:
-        return render(request,'notFound.html')
+        return render(request, 'notFound.html')
 
-    return render(request, 'homeSite.html',locals())
+    return render(request, 'homeSite.html', locals())
+    # 查询当前文章内容

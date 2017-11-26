@@ -49,12 +49,10 @@
             <div class="media">
                 <div class="media-left media-middle">
                     <a href="#">
-                        <img class="media-object" src="/static/img/default.png" alt="">
+                        <img class="media-object" src="{{ artical.user.avatar.url }}" alt="">
                     </a>
                 </div>
-{#            {% endfor %}#}
                 <div class="media-body">
-{#                    {% for artical in artical_list %}#}
                         <h4 class="media-heading"><a href="">{{ artical.title }}</a></h4>
                          {{ artical.desc }}
                 </div>

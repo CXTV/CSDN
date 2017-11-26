@@ -69,7 +69,7 @@ class Article(models.Model):
     up_count = models.IntegerField(default=0)
     down_count = models.IntegerField(default=0)
     alter_time = models.DateTimeField(verbose_name='修改时间', auto_now=True)
-    create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
+    create_time = models.DateTimeField(verbose_name='创建时间')
 
     category = models.ForeignKey(verbose_name='文章类型', to='Category', to_field='nid', null=True)
     user = models.ForeignKey(verbose_name='所属用户', to='UserInfo', to_field='nid')

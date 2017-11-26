@@ -136,13 +136,16 @@ def homeSite(request, username):  # 这里username传的是url里的有名分组
     # 查询 当前用户的分类归档
     category_list = models.Category.objects.all().filter(blog=current_blog).annotate(
         c=Count("article__nid")).values_list("title", "c")
-    print(category_list)
+    # print(category_list)
 
     # 查询当前用户的标签归档
     tag_list = models.Tag.objects.all().filter(blog=current_blog).annotate(c=Count("article__nid")).values_list("title",                                                                                                              "c")
-    print(tag_list)
+    # print(tag_list)
 
     # 查询 当前用户的时间归档
+    date_list=models.Article.objects.filter(user=current_user).extra(select={"filter_create_date":"strftime('%%Y/%%m',create_time)"}).values_list("filter_create_date").annotate(Count("nid"))
+    # print(date_list)
+
 
 
     return render(request, 'homeSite.html',

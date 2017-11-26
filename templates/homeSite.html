@@ -15,7 +15,8 @@
         }
 
         .artical_list {
-            margin-top: 50px;
+            margin-top: 10px;
+            margin-left: 40px;
         }
 
         .info {
@@ -26,13 +27,18 @@
         .archive {
             margin-top: 50px;
         }
-
+        .username{
+            color: #000;
+            font-size: 30px;
+            font-weight: normal;
+            margin: 5px 0 0 100px;
+        }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <class class="username"><h4>{{ username }}</h4></class>
+    <class class="username">{{ username }}</class>
 </div>
 <div class="container">
     <div class="row">
@@ -51,6 +57,9 @@
                     {% for category in category_list %}
                         <a href=""><p>{{ category.0 }}({{ category.1 }})</p></a>
                     {% endfor %}
+{#                    {% for category in current_user.blog.category_set.all%}#}
+{#                        <p>{{ category }}({{ category.article_set.count }})</p>#}
+{#                    {% endfor %}#}
                 </div>
             </div>
             <div class="panel panel-info">
@@ -58,6 +67,14 @@
                 <div class="panel-body">
                     {% for tag in tag_list %}
                         <a href=""><p>{{ tag.0 }}({{ tag.1 }})</p></a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">日期归档</div>
+                <div class="panel-body">
+                    {% for date in date_list %}
+                        <p><a href="/blog/{{ current_user.username }}/date/{{ date.0 }}">{{ date.0 }}({{ date.1 }})</a></p>
                     {% endfor %}
                 </div>
             </div>
@@ -87,3 +104,8 @@
 
 </body>
 </html>
+<div class="panel-body">
+    {% for date in date_list %}
+        <p><a href="/blog/{{ current_user.username }}/date/{{ date.0 }}">{{ date.0 }}({{ date.1 }})</a></p>
+    {% endfor %}
+</div>

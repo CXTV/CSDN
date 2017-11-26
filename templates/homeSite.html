@@ -6,20 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ username }}</title>
     <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <script src="/static/bootstrap-3.3.7-dist/js/jquery-3.1.1.js"></script>    <style>
-        .header{
+    <script src="/static/bootstrap-3.3.7-dist/js/jquery-3.1.1.js"></script>
+    <style>
+        .header {
             width: 100%;
             height: 44px;
             background-color: #336699;
         }
-        .artical_list{
+
+        .artical_list {
             margin-top: 50px;
         }
-        .info{
+
+        .info {
             font-size: 10px;
             color: gainsboro;
         }
-        .archive{
+
+        .archive {
             margin-top: 50px;
         }
 
@@ -28,19 +32,37 @@
 <body>
 
 <div class="header">
-   <class class="username"><h4>{{ username }}</h4></class>
+    <class class="username"><h4>{{ username }}</h4></class>
 </div>
 <div class="container">
     <div class="row">
-{#    左侧归档#}
-        <div class="archive col-md-3" >
-            <div class="panel panel-info">
-                  <div class="panel-heading">个人信息</div>
-                  <div class="panel-body">
-                     <p><img src="{{ current_user.avatar.url }}" alt="" width="60" height="60"></p>
-                     <p>昵称: {{ current_user.username }}</p>
-                  </div>
+        {#    左侧归档#}
+        <div class="archive col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">个人信息</div>
+                <div class="panel-body">
+                    <p><img src="{{ current_user.avatar.url }}" alt="" width="60" height="60"></p>
+                    <p>昵称: {{ current_user.username }}</p>
+                </div>
             </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">分类归档</div>
+                <div class="panel-body">
+                    {% for category in category_list %}
+                        <a href=""><p>{{ category.0 }}({{ category.1 }})</p></a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">标签归档</div>
+                <div class="panel-body">
+                    {% for tag in tag_list %}
+                        <a href=""><p>{{ tag.0 }}({{ tag.1 }})</p></a>
+                    {% endfor %}
+                </div>
+            </div>
+
+
 
         </div>
         <div class="artical_list col-md-8">

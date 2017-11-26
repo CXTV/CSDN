@@ -1,4 +1,5 @@
 import json
+from django.db.models import Count, Sum
 from django.shortcuts import render, redirect, HttpResponse
 from csdn.forms import *
 from blog.geetest import GeetestLib
@@ -124,10 +125,26 @@ def logout(request):
 def homeSite(request, username):  # 这里username传的是url里的有名分组?P
     # 查询当前用户
     current_user = models.UserInfo.objects.filter(username=username).first()
+    current_blog = current_user.blog
     if not current_user:
         return render(request, 'notFound.html')
 
     # 查询当前文章内容
-    artical_list = models.Article.objects.filter(user=current_user)  # ??当前用户所有文章
+    artical_list = models.Article.objects.filter(user=current_user)  # 当前用户所有文章
 
-    return render(request, 'homeSite.html', {'username':current_user,'artical_list':artical_list,'current_user':current_user})
+    # 分组查询，聚合查询
+    # 查询 当前用户的分类归档
+    category_list = models.Category.objects.all().filter(blog=current_blog).annotate(
+        c=Count("article__nid")).values_list("title", "c")
+    print(category_list)
+
+    # 查询当前用户的标签归档
+    tag_list = models.Tag.objects.all().filter(blog=current_blog).annotate(c=Count("article__nid")).values_list("title",                                                                                                              "c")
+    print(tag_list)
+
+    # 查询 当前用户的时间归档
+
+
+    return render(request, 'homeSite.html',
+                  {'username': current_user, 'artical_list': artical_list, 'current_user': current_user,
+                   'category_list': category_list,'tag_list':tag_list})

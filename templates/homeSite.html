@@ -12,12 +12,20 @@
             height: 44px;
             background-color: #336699;
         }
+        .artical_list{
+            margin-top: 50px;
+        }
+        .info{
+            font-size: 10px;
+            color: gainsboro;
+        }
+
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h4>{{ username }}</h4>
+   <class class="username"> <h4>{{ username }}</h4></class>
 </div>
 <div class="container">
     <div class="row">
@@ -26,7 +34,16 @@
         </div>
         <div class="artical_list col-md-8">
             {% for artical in artical_list %}
-               <p>{{ artical.title }}</p>
+                <div class="row">
+                    <div class="artical_title"><a href=""><h3>{{ artical.title }}</h3></a></div>
+                    <div class="artical_desc">{{ artical.desc }}</div>
+                    <div class="info pull-right">
+                        发表于 <span>{{ artical.create_time|date:"Y-m-d" }}</span>&nbsp;&nbsp;
+                        <span>评论({{ artical.comment_count }})</span>&nbsp;&nbsp;
+                        <span>点赞({{ artical.up_count }})</span>&nbsp;&nbsp;
+                        <span>阅读({{ artical.read_count }})</span>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>

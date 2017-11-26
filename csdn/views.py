@@ -127,9 +127,7 @@ def homeSite(request, username):  # 这里username传的是url里的有名分组
     if not current_user:
         return render(request, 'notFound.html')
 
-
     # 查询当前文章内容
-    artical_list = models.Article.objects.filter(user=current_user)   #??当前用户所有文章
+    artical_list = models.Article.objects.filter(user=current_user)  # ??当前用户所有文章
 
-
-    return render(request, 'homeSite.html', locals())
+    return render(request, 'homeSite.html', {'username':current_user,'artical_list':artical_list})

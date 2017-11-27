@@ -122,7 +122,7 @@ def logout(request):
     return redirect('/login')
 
 
-def homeSite(request, username):  # 这里username传的是url里的有名分组?P
+def homeSite(request, username,**kwargs):  # 这里username传的是url里的有名分组?P
     # 查询当前用户
     current_user = models.UserInfo.objects.filter(username=username).first()
     current_blog = current_user.blog
@@ -139,15 +139,22 @@ def homeSite(request, username):  # 这里username传的是url里的有名分组
     # print(category_list)
 
     # 查询当前用户的标签归档
-    tag_list = models.Tag.objects.all().filter(blog=current_blog).annotate(c=Count("article__nid")).values_list("title",                                                                                                              "c")
+    tag_list = models.Tag.objects.all().filter(blog=current_blog).annotate(c=Count("article__nid")).values_list("title",
+                                                                                                                "c")
     # print(tag_list)
 
     # 查询 当前用户的时间归档
-    date_list=models.Article.objects.filter(user=current_user).extra(select={"filter_create_date":"strftime('%%Y/%%m',create_time)"}).values_list("filter_create_date").annotate(Count("nid"))
+    date_list = models.Article.objects.filter(user=current_user).extra(
+        select={"filter_create_date": "strftime('%%Y/%%m',create_time)"}).values_list("filter_create_date").annotate(
+        Count("nid"))
     # print(date_list)
+
+
+
+
 
 
 
     return render(request, 'homeSite.html',
                   {'username': current_user, 'artical_list': artical_list, 'current_user': current_user,
-                   'category_list': category_list,'tag_list':tag_list})
+                   'category_list': category_list, 'tag_list': tag_list, 'date_list': date_list})

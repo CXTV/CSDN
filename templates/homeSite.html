@@ -55,7 +55,7 @@
                 <div class="panel-heading">分类归档</div>
                 <div class="panel-body">
                     {% for category in category_list %}
-                        <a href=""><p>{{ category.0 }}({{ category.1 }})</p></a>
+                        <a href="/blog/{{ current_user.username }}/category/{{ category.0 }}"><p>{{ category.0 }}({{ category.1 }})</p></a>
                     {% endfor %}
 {#                    {% for category in current_user.blog.category_set.all%}#}
 {#                        <p>{{ category }}({{ category.article_set.count }})</p>#}
@@ -66,7 +66,7 @@
                 <div class="panel-heading">标签归档</div>
                 <div class="panel-body">
                     {% for tag in tag_list %}
-                        <a href=""><p>{{ tag.0 }}({{ tag.1 }})</p></a>
+                        <a href="/blog/{{ current_user.username }}/tag/{{ tag.0 }}"><p>{{ tag.0 }}({{ tag.1 }})</p></a>
                     {% endfor %}
                 </div>
             </div>
@@ -78,8 +78,6 @@
                     {% endfor %}
                 </div>
             </div>
-
-
 
         </div>
         <div class="artical_list col-md-8">

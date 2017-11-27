@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/', views.login),
     url(r'^index/', views.index),
+    url(r'^$', views.index),
     url(r'^regist/', views.regist),
     url(r'^logout/', views.logout),
     url(r'^pc-geetest/register', views.pcgetcaptcha, name='pcgetcaptcha'),

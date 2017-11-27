@@ -122,7 +122,7 @@ def logout(request):
     return redirect('/login')
 
 
-def homeSite(request, username,**kwargs):  # 这里username传的是url里的有名分组?P
+def homeSite(request, username, **kwargs):  # 这里username传的是url里的有名分组?P
     # 查询当前用户
     current_user = models.UserInfo.objects.filter(username=username).first()
     current_blog = current_user.blog
@@ -149,11 +149,17 @@ def homeSite(request, username,**kwargs):  # 这里username传的是url里的有
         Count("nid"))
     # print(date_list)
 
-
-
-
-
-
+    # 跳转
+    print(kwargs)
+    # {'condition': 'category', 'para': 'rocks的mysql'} 传入的是字典形式
+    if kwargs:
+        if kwargs.get('condition') == 'category':
+            artical_list = models.Article.objects.filter(user=current_user, category__title=kwargs.get("para"))  #
+        elif kwargs.get("condition")== "tag":
+            artical_list= models.Article.objects.filter(user=current_user,tags__title=kwargs.get("para"))
+        elif kwargs.get("condition") == "date":
+            year,month=kwargs.get("para").split("/") #去除/
+            artical_list= models.Article.objects.filter(user=current_user,create_time__year=year,create_time__month=month)
 
     return render(request, 'homeSite.html',
                   {'username': current_user, 'artical_list': artical_list, 'current_user': current_user,

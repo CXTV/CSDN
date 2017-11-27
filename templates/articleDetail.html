@@ -1,0 +1,20 @@
+{% extends "homeSite.html" %}
+
+{% block content %}
+{#    文章主体#}
+     <div class="article_region">
+        <div class="row">
+            <h3 class="text-center">{{ article_obj.title }}</h3>
+            <div class="article_con">{{ article_obj.articledetail.content|safe}}</div>
+        </div>
+     </div>
+{#文章点赞#}
+     <div class="updown row">
+        <div class="buryit pull-right">
+            <span class="burynum" id="bury_count">1</span>
+        </div>
+        <div class="diggit pull-right">
+            <span class="diggnum" id="digg_count">{{ article_obj.up_count }}</span>
+        </div>
+     </div>
+{% endblock %}

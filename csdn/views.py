@@ -155,12 +155,48 @@ def homeSite(request, username, **kwargs):  # 这里username传的是url里的�
     if kwargs:
         if kwargs.get('condition') == 'category':
             artical_list = models.Article.objects.filter(user=current_user, category__title=kwargs.get("para"))  #
-        elif kwargs.get("condition")== "tag":
-            artical_list= models.Article.objects.filter(user=current_user,tags__title=kwargs.get("para"))
+        elif kwargs.get("condition") == "tag":
+            artical_list = models.Article.objects.filter(user=current_user, tags__title=kwargs.get("para"))
         elif kwargs.get("condition") == "date":
-            year,month=kwargs.get("para").split("/") #去除/
-            artical_list= models.Article.objects.filter(user=current_user,create_time__year=year,create_time__month=month)
+            year, month = kwargs.get("para").split("/")  # 去除/
+            artical_list = models.Article.objects.filter(user=current_user, create_time__year=year,
+                                                         create_time__month=month)
 
     return render(request, 'homeSite.html',
                   {'username': current_user, 'artical_list': artical_list, 'current_user': current_user,
-                   'category_list': category_list, 'tag_list': tag_list, 'date_list': date_list})
+                   'category_list': category_list, 'tag_list': tag_list, 'date_list': date_list,'current_blog':current_blog})
+
+
+def articleDetail(request, username,article_id):
+    current_user = models.UserInfo.objects.filter(username=username).first()
+    current_blog = current_user.blog
+    if not current_user:
+        return render(request, 'notFound.html')
+
+    # 查询当前用户所有文章
+
+    article_list = models.Article.objects.filter(user=current_user)
+
+    # 查询 当前用户的分类归档
+    from django.db.models import Count, Sum
+
+    category_list = models.Category.objects.all().filter(blog=current_blog).annotate(
+        c=Count("article__nid")).values_list("title", "c")
+    print(category_list)  # <QuerySet [<Category: yuan的go>, <Category: yuan的java>]>
+
+    # 查询当前用户的标签归档
+
+    tag_list = models.Tag.objects.all().filter(blog=current_blog).annotate(c=Count("article__nid")).values_list("title",
+                                                                                                                "c")
+    print(tag_list)  # <QuerySet [('基础知识', 3), ('插件框架', 0), ('web开发', 1)]>
+
+    # 查询当前用户的日期归档
+
+    date_list = models.Article.objects.filter(user=current_user).extra(
+        select={"filter_create_date": "strftime('%%Y/%%m',create_time)"}).values_list("filter_create_date").annotate(
+        Count("nid"))
+    print(date_list)
+
+    article_obj=models.Article.objects.filter(nid=article_id).first()
+
+    return render(request, 'articleDetail.html',locals())

@@ -200,3 +200,8 @@ def articleDetail(request, username,article_id):
     article_obj=models.Article.objects.filter(nid=article_id).first()
 
     return render(request, 'articleDetail.html',locals())
+
+
+def poll(request):
+
+    return HttpResponse(json.dumps())

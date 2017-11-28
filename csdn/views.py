@@ -165,10 +165,11 @@ def homeSite(request, username, **kwargs):  # 这里username传的是url里的�
 
     return render(request, 'homeSite.html',
                   {'username': current_user, 'artical_list': artical_list, 'current_user': current_user,
-                   'category_list': category_list, 'tag_list': tag_list, 'date_list': date_list,'current_blog':current_blog})
+                   'category_list': category_list, 'tag_list': tag_list, 'date_list': date_list,
+                   'current_blog': current_blog})
 
 
-def articleDetail(request, username,article_id):
+def articleDetail(request, username, article_id):
     current_user = models.UserInfo.objects.filter(username=username).first()
     current_blog = current_user.blog
     if not current_user:
@@ -198,12 +199,22 @@ def articleDetail(request, username,article_id):
         Count("nid"))
     print(date_list)
 
-    article_obj=models.Article.objects.filter(nid=article_id).first()
+    article_obj = models.Article.objects.filter(nid=article_id).first()
 
-    return render(request, 'articleDetail.html',locals())
+    return render(request, 'articleDetail.html', locals())
 
 
 def poll(request):
-
-
-    return HttpResponse(json.dumps())
+    user_id = request.user.nid
+    article_id = request.POST.get('article_id')
+    pollResponse = {"state": True, "is_repeat": None}
+    if models.ArticleUp.objects.filter(user_id=user_id, article_id=article_id):
+        pollResponse["state"] = False
+        pollResponse["is_repeat"] = True
+    else:
+        try:
+            articleUp = models.ArticleUp.objects.create(user_id=user_id, article_id=article_id)
+            models.Article.objects.filter(nid=article_id).update(up_count=F("up_count") + 1)  # 点赞加一
+        except:
+            pollResponse["state"] = False
+    return HttpResponse(json.dumps(pollResponse={"state": True, "is_repeat": None}))

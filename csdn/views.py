@@ -5,6 +5,7 @@ from csdn.forms import *
 from blog.geetest import GeetestLib
 from csdn import forms
 from django.contrib import auth
+from django.db.models import F
 
 pc_geetest_id = "b46d1900d0a894591916ea94ea91bd2c"
 pc_geetest_key = "36fc3fe98530eea08dfc6ce76e3d24c4"
@@ -203,5 +204,6 @@ def articleDetail(request, username,article_id):
 
 
 def poll(request):
+
 
     return HttpResponse(json.dumps())

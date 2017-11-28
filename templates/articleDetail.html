@@ -15,6 +15,7 @@
         </div>
         <div class="diggit pull-right">
             <span class="diggnum" id="digg_count">{{ article_obj.up_count }}</span>
+            <span class="diggnum_error pull-right"></span>
         </div>
      </div>
 
@@ -34,7 +35,29 @@
 
     </div>
 
+    <script>
+        $('.diggit').click(function () {
+            $.ajax({
+                url:"/blog/poll/",
+                type:"post",
+
+                data:{
+                    csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val(),
+                    article_id:"{{ article_obj.nid }}"
+                },
+                success:function (data) {
+                    var data = JSON.parse(data);
+                    if (data.state){
+                        var val=parseInt($("#digg_count").html())+1;
+                        $("#digg_count").html(val)
+                    }
+                    else if(data.is_repeat){
+                        $(".diggnum_error").html("").css("color","red")
+                    }
+                }
 
 
-
+            })
+        })
+    </script>
 {% endblock %}

@@ -27,7 +27,6 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^regist/', views.regist),
     url(r'^logout/', views.logout),
-    url(r'^poll/', views.poll),
     url(r'^pc-geetest/register', views.pcgetcaptcha, name='pcgetcaptcha'),
     url(r'^pc-geetest/validate$', views.pcvalidate, name='pcvalidate'),
     url(r'^pc-geetest/ajax_validate', views.pcajax_validate, name='pcajax_validate'),

@@ -55,8 +55,9 @@ def regist(request):
 
 def index(request):
     artical_list = models.Article.objects.all()
+    cate_list = models.SiteCategory.objects.all()
 
-    return render(request, 'index.html', {'artical_list': artical_list})
+    return render(request, 'index.html', {'artical_list': artical_list,'cate_list':cate_list})
 
 
 def logout(request):

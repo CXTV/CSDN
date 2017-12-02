@@ -34,19 +34,34 @@
         {% endif %}
     </ul>
 </nav>
+
 <div class="container">
+{#页面主体#}
     <div class="row">
         <div class="col-md-2">
             {#            左侧菜单#}
             <div class="panel panel-default">
                 <div class="panel-body">
-                    网站分类
+                    编程语言
                 </div>
                 <div class="panel-footer">
-                    {{  }}
+                    {% for cate in cate_list %}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <p>{{ cate.name }}</p>
+                            </div>
+                            <div class="panel-footer">
+                                {% for cate in cate.sitearticlecategory_set.all %}
+                                    <p>{{ cate.name }}</p>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+
         <div class="col-md-7">
             {#            内容#}
             {% for artical in artical_list %}
@@ -98,3 +113,4 @@
 </div>
 </body>
 </html>
+

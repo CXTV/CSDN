@@ -19,6 +19,7 @@ from csdn import views
 
 from django.views.static import serve  # 引入配置media的路径
 from django.conf import settings  # 引入settings
+from app01 import views as app01_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,9 +28,12 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^regist/', views.regist),
     url(r'^logout/', views.logout),
-    url(r'^pc-geetest/register', views.pcgetcaptcha, name='pcgetcaptcha'),
-    url(r'^pc-geetest/validate$', views.pcvalidate, name='pcvalidate'),
-    url(r'^pc-geetest/ajax_validate', views.pcajax_validate, name='pcajax_validate'),
+    url(r'^demo/', views.demo),
+
+    #滑动验证码
+    url(r'^pc-geetest/register', app01_views.pcgetcaptcha, name='pcgetcaptcha'),
+    url(r'^pc-geetest/validate$', app01_views.pcvalidate, name='pcvalidate'),
+    url(r'^pc-geetest/ajax_validate', app01_views.pcajax_validate, name='pcajax_validate'),
 
     # 个人站点首页
     url(r'^blog/', include('csdn.urls')),

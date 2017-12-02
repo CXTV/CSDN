@@ -52,12 +52,16 @@ def regist(request):
     return render(request, 'regist.html', {'form_obj': form})
 
 
+def index(request, *args,**kwargs):
+    print(kwargs)
+    if kwargs:
+        artical_list = models.Article.objects.filter(site_article_category__name =kwargs.get('site_articlecategory'))
+    else:
+        artical_list = models.Article.objects.all()
 
-def index(request):
-    artical_list = models.Article.objects.all()
     cate_list = models.SiteCategory.objects.all()
 
-    return render(request, 'index.html', {'artical_list': artical_list,'cate_list':cate_list})
+    return render(request, 'index.html', {'artical_list': artical_list, 'cate_list': cate_list})
 
 
 def logout(request):
@@ -108,7 +112,7 @@ def homeSite(request, username, **kwargs):  # 这里username传的是url里的�
     return render(request, 'homeSite.html',
                   {'username': current_user, 'artical_list': artical_list, 'current_user': current_user,
                    'category_list': category_list, 'tag_list': tag_list, 'date_list': date_list,
-                   'current_blog': current_blog })
+                   'current_blog': current_blog})
 
 
 def articleDetail(request, username, article_id):
@@ -161,5 +165,6 @@ def poll(request):
             pollResponse["state"] = False
     return HttpResponse(json.dumps(pollResponse))
 
+
 def demo(request):
-    return render(request,'demo.html')
+    return render(request, 'demo.html')

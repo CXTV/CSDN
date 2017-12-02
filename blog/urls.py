@@ -22,11 +22,13 @@ from django.conf import settings  # 引入settings
 from app01 import views as app01_views
 
 urlpatterns = [
+    #登录
     url(r'^admin/', admin.site.urls),
     url(r'^login/', views.login),
     #网站主页
     url(r'^index/', views.index),
     url(r'^$', views.index),
+    url(r'^cate/(?P<site_articlecategory>.*)/$', views.index),
     #注册页面
     url(r'^regist/', views.regist),
     #登出

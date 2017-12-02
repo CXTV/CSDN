@@ -56,8 +56,8 @@
                                 <p>{{ cate.name }}</p>
                             </div>
                             <div class="panel-footer hides">
-                                {% for cate in cate.sitearticlecategory_set.all %}
-                                    <p><a href="/cate/{{ cate.name }}">{{ cate.name }}</a></p>
+                                {% for sitearticlecategory in cate.sitearticlecategory_set.all %}
+                                    <p><a href="/cate/{{ sitearticlecategory.name }}">{{ sitearticlecategory.name }}</a></p>
                                 {% endfor %}
                                 
                             </div>

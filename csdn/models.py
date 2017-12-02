@@ -48,6 +48,7 @@ class Category(models.Model):
     title = models.CharField(verbose_name='分类标题', max_length=32)
     blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='nid')
 
+
     def __str__(self):
         return self.title
 

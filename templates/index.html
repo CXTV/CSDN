@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>首页</title>
     <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <script src="/static/bootstrap-3.3.7-dist/js/jquery-3.1.1.js"></script>
+
     <style>
         .pub_info {
             margin-left: 50px;
@@ -50,7 +52,7 @@
                 <div class="panel-footer">
                     {% for cate in cate_list %}
                         <div class="panel panel-default">
-                            <div class="panel-body">
+                            <div class="panel-body cate_title">
                                 <p>{{ cate.name }}</p>
                             </div>
                             <div class="panel-footer hides">
@@ -114,6 +116,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(".cate_title").mouseover(function () {
+        $(this).next().slideDown(300)
+    });
+    $(".cate_title").parent().mouseleave(function () {
+    $(this).children(".panel-footer").slideUp(300)
+    })
+</script>
 </body>
 </html>
 

@@ -24,10 +24,14 @@ from app01 import views as app01_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/', views.login),
+    #网站主页
     url(r'^index/', views.index),
     url(r'^$', views.index),
+    #注册页面
     url(r'^regist/', views.regist),
+    #登出
     url(r'^logout/', views.logout),
+    #jsonp
     url(r'^demo/', views.demo),
 
     #滑动验证码
